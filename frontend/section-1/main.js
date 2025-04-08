@@ -30,10 +30,54 @@
 
 // alert("Terima kasih telah bermain!");
 
-// Cara lebih kompleks (kepakai di react)
 
+// Cara lebih kompleks pake arrow function
 const getRandomNumber = (min = 1, max = 10) => {
-  Math.floor(Math.random() * (max - min + 1)) + min;
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+};
+
+const promptGuess = (attempt) => {
+  return Number(prompt(`Tebak angka dari 1-10, percobaan ke-${attempt}`));
+};
+
+const checkGuess = (guess, target) => {
+  if (isNaN(guess)) return "invalid";
+  if (guess === target) return "benar";
+  if (guess > target) return "terlaluBesar";
+  return "terlaluKecil";
+};
+
+const playGame = () => {
+  const maxAttempts = 5
+  const target = getRandomNumber();
+  const guesses = [];
+
+  for (let i = 0; i < maxAttempts; i++) {
+    const guess = promptGuess(i + 1);
+    guesses.push(guess);
+
+    const result = checkGuess(guess, target);
+    if (result === "benar") {
+      alert(`Selamat jawabanmu benar dalam ${i + 1} percobaan! jawabannya adalah ${target}`);
+      return;
+    } else if (result === "terlaluBesar") {
+      alert("Jawabanmu terlalu besar");
+    } else {
+      alert("Jawabanmu terlalu kecil");
+    }
+
+    if (i === maxAttempts - 1) {
+      alert(`😞 Kesempatan habis. jawabannya adalah ${target}`);
+    }
+  }
+}
+
+let playAgain = true;
+
+while (playAgain) {
+  playGame();
+
+  playAgain = confirm("Main lagi?");
 }
 
 
@@ -69,3 +113,5 @@ const getRandomNumber = (min = 1, max = 10) => {
 // }
 
 // alert("Terima kasih telah bermain!");
+
+
